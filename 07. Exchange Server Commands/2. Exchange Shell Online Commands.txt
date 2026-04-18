@@ -95,3 +95,41 @@ It list out all transport service details)
 
 32. Test-NetConnection mail.abc.com -Port 25 (If business uses on prem exchange server use this command to check if smtp port 25 is open or not)
 
+33. Disable-Mailbox -Identity "Sam Curran" -Confirm:$false
+(Disables the mailbox for the specified user Sam and converts it into a disconnected mailbox)
+
+34. Enable-Mailbox -Identity "Sam Curran" -Database "DB"
+(Creates or re-enables a mailbox for a user in the specified database)
+
+35. Connect-Mailbox -Identity "Sam Curran" -Database "DB" -User "Sam Smith"
+(Connects a disconnected mailbox to a different user account in the same database)
+
+Note: 
+Disable-Mailbox → removes mailbox but keeps data (disconnected mailbox)
+Enable-Mailbox → creates mailbox for a user
+Connect-Mailbox → attaches an old disconnected mailbox to a user
+
+36. Assign a disconnected mailbox from one user (Sam Curran) to another user (Sam Smith).
+Step 1: Find the disconnected mailbox and get the mailbox identity (GUID or display name)
+Example: Get-MailboxStatistics -Database "DB" | Where-Object { $_.DisplayName -eq "Sam Curran" }
+Note: It will give the MailboxGuid, and you will need that MailboxGuid in the next step to assign that mailbox to another user. In our case, it will give the MailboxGuid, and you will need that MailboxGuid in the next step to assign Sam Curran’s mailbox to Sam Smith.
+
+Step 2: Connect mailbox to another user
+Connect-Mailbox -Identity "<MailboxGUID>" -Database "DB" -User "Sam Smith"
+Final Command: Connect-Mailbox -Identity "2f3a8c12-9b1d-4e55-9a77-abc123456789" -Database "DB" -User "Sam Smith"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
