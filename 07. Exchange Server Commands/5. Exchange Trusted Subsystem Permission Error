@@ -1,0 +1,59 @@
+#Exchange Permission Issue Fix for Distribution Groups (samtech.com)
+#Environment:
+
+- Active Directory domain: samtech.com
+- Organizational Unit (OU): OU=Employees,DC=samtech,DC=com
+- Exchange security principal: Exchange Trusted Subsystem
+
+#Issue Description: Administrators are unable to create, modify, or manage distribution groups within the Employees OU in Active Directory. When attempting to 
+perform operations such as creating a new distribution group, adding or removing members, or updating group properties throughExchange, the operation fails.
+
+#Common error messages include:
+- Access is denied
+- Insufficient permissions to perform the operation
+- Failed to update Active Directory object
+- Unable to modify distribution group
+- These errors occur even when the administrator account has Exchange admin privileges.
+
+#Cause: This issue occurs because the Exchange Trusted Subsystem security group does not have the required permissions on the Employees OU in Active Directory.
+#Exchange uses the Exchange Trusted Subsystem to perform background operations in Active Directory, such as:
+
+- Creating distribution groups
+- Modifying group membership
+- Updating mail-enabled group attributes
+If this group does not have sufficient rights on the OU where the distribution groups are stored, Exchange cannot perform these actions, resulting in permission errors.
+
+#Resolution: To resolve this issue, the required permissions must be assigned to the Exchange Trusted Subsystem on the affected OU.
+
+#Steps to Fix:
+- Open Active Directory Users and Computers
+- From the top menu, select View > Advanced Features to enable advanced security settings
+- Navigate to the following OU:
+- OU=Employees,DC=samtech,DC=com
+- Right-click the Employees OU and select Properties
+- Go to the Security tab and click Advanced
+- Click Add to add a new permission entry
+- Click Select a principal and enter:
+- Exchange Trusted Subsystem
+- Then click OK
+
+#Set the permission scope:
+- Applies to: Descendant Group objects
+- This ensures the permission applies only to distribution groups inside the OU
+- Scroll down and click Clear all to remove default permissions
+
+#Under permissions, select:
+- Modify permissions
+- Click OK, then apply and close all open windows
+
+# Result After Fix
+Once the permissions are applied correctly:
+
+- Exchange can create new distribution groups in the Employees OU
+- Existing distribution groups can be modified without errors
+- Group membership can be updated successfully
+- Mail-enabled group attributes can be managed without access issues
+- Permission-related errors in Exchange are resolved
+
+# Conclusion: The issue is caused by missing Active Directory permissions for the Exchange Trusted Subsystem on the target OU. Granting Modify permissions on 
+the Employees OU for this security group allows Exchange to fully manage distribution groups without restrictions.
