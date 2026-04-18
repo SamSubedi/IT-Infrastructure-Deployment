@@ -1,0 +1,86 @@
+1. Get-Queue 
+(Displays all mail queues on the Exchange server)
+
+2. Get-Queue | Get-Message 
+(Shows all messages inside all queues)
+
+3. nslookup smtp.gmail.com
+(Checks DNS resolution for Gmail SMTP server)
+
+4. Get-Message -Queue "QueueName" | Format-List
+(Shows detailed information of messages in a specific queue)
+
+5. Remove-Message -Identity "MessageID" 
+(Deletes a specific message from the mail queue)
+
+6. Retry-Queue -Identity "QueueName" -Resubmit 
+(Resends all messages in the selected queue)
+
+7. Get-Queue | Format-Table 
+(Displays queue information in table format)
+
+8. Get-JournalRule 
+(Displays all configured journal rules in Exchange)
+
+9. New-MailboxDatabase -Name "SalesDB" -EdbFilePath "D:\Exchange\Databases\SalesDB.edb" -LogFolderPath "D:\Exchange\Databases\Logs\SalesDB" 
+(Creates a new Exchange mailbox database named “SalesDB” and defines where the database file (.edb) and transaction log files will be stored on the server drive)
+
+10. Get-Mailbox -Database "DB" -ResultSize Unlimited | Where-Object { $_.UserAccountControl -eq "AccountDisabled" } 
+(Lists all mailboxes in the specified database that have disabled user accounts)
+
+11. Get-MailboxStatistics -Database "DB" | Where-Object { $_.DisconnectReason -ne $null } 
+(Shows mailbox statistics for the database and filters mailboxes that are disconnected from their user accounts)
+
+12. Get-Mailbox -Database "DB" -ResultSize Unlimited | Where-Object { $_.MailboxState -eq "Disabled" } 
+(Lists mailboxes in the database that are in a disabled state)
+
+13. Get-MailboxStatistics | Where-Object { $_.DisconnectReason -ne $null } 
+(Shows mailboxes that are disconnected from their user accounts)
+
+14. Get-Mailbox -Database "DB" -ResultSize Unlimited | Where-Object { $_.ArchiveStatus -eq "Inactive" } 
+(Finds mailboxes whose archive is inactive in the database)
+
+15. Get-Mailbox -Database "DB" -ResultSize Unlimited | Where-Object { $_.IsMailboxEnabled -eq $false } 
+(Filters mailboxes that are not enabled)
+
+16. Get-Mailbox -Identity cat | Format-List Name, RecipientTypeDetails, Database 
+(Displays detailed information about the mailbox “cat” and its current state)
+
+17. Disable-Mailbox -Identity cat -Confirm:$false 
+(Disables the mailbox for user “cat” without asking for confirmation)
+
+18. Connect-Mailbox -Identity cat -User car -Database "DB" 
+(Reattaches a disconnected mailbox “cat” to user “car” in the specified database)
+
+19. Get-Mailbox -Identity cat | Format-List Name, Database, RecipientTypeDetails 
+(Shows updated mailbox details after connection or changes)
+
+20. Add-MailboxPermission -Identity cat -User car -AccessRights FullAccess 
+(Gives user “car” full access permissions to mailbox “cat”)
+
+21. Get-Mailbox -Identity car | Format-List Name, Database, RecipientTypeDetails 
+(Displays mailbox details for user “car”)
+
+22. Get-Mailbox -Database "DB" | Where-Object { $_.DisplayName -eq "Cat" } 
+(Finds the mailbox named “Cat” in the specified database)
+
+23. Update-StoreMailboxState -Database "db_name" -Identity "mailbox_guid"
+(Updates or synchronizes the mailbox state in the specified database using the mailbox GUID)
+
+24. Connect-Mailbox -Identity "Jeffrey Zeng" -Database MBXDB01 -User "Jeffrey Zeng" 
+(Reattaches a disconnected mailbox named “Jeffrey Zeng” in database MBXDB01 back to the same user account)
+
+25. Set-Mailbox -Identity <MailboxIdentity> -ProhibitSendQuota 15GB -ProhibitSendReceiveQuota 15GB -IssueWarningQuota 14GB 
+(Sets storage limits for a specific mailbox including warning, send restriction, and send/receive restriction quotas)
+
+26. Set-MailboxDatabase -Identity <DatabaseName> -IssueWarningQuota 14GB -ProhibitSendQuota 15GB -ProhibitSendReceiveQuota 15GB 
+(Sets default mailbox storage limits at the database level for all mailboxes in that database)
+
+27. Get-Mailbox | Set-Mailbox -ProhibitSendQuota 6GB -ProhibitSendReceiveQuota 6GB -IssueWarningQuota 5.5GB -UseDatabaseQuotaDefaults $false 
+(Applies custom mailbox size limits to all mailboxes in the organization and overrides database defaults)
+
+28. Get-MailboxDatabase executive | Get-Mailbox | Set-Mailbox -ProhibitSendQuota 6GB -ProhibitSendReceiveQuota 6GB -IssueWarningQuota 5.5GB -UseDatabaseQuotaDefaults $false 
+(Applies custom quota limits to all mailboxes in the “executive” database)
+
+29. Get-MailboxDatabase | Set-MailboxDatabase -IssueWarningQuota 14.5GB -ProhibitSendQuota 15GB -ProhibitSendReceiveQuota 15.3GB 
+(Sets quota limits for all mailbox databases in Exchange; note: this is a corrected cmdlet name — “Set-MailboxDatabse” should be “Set-MailboxDatabase”)
