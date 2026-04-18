@@ -1,27 +1,22 @@
 1. Create CSR Sample: 
 $txtrequest = New-ExchangeCertificate -GenerateRequest -SubjectName "c=US,o=Certificate by samtech,cn=mail.samtech.com" -DomainName mail.samtech.com,autodiscover.samtech.com
-
 [System.IO.File]::WriteAllBytes('\\mail\cert\exchangecert.req', [System.Text.Encoding]::Unicode.GetBytes($txtrequest))
  
 2. Import Certificate Sample:
 $cert = Import-ExchangeCertificate -FileData ([System.IO.File]::ReadAllBytes("\\Mail\Cert\certnew.cer")) -Password (Get-Credential).password
 
-
 3. Get Thumbprint Details
 Get-Exchangecertificate
 (Copy Thumbprint from this command)
-
  
 4. Enable Certificate Sample: 
 Enable-ExchangeCertificate -Thumbprint -Services "IIS"
-For Example Thumbprint=2548917C09385842A78C36F164425E611C72E541
+For Example, Thumbprint=2548917C09385842A78C36F164425E611C72E541
 Final Command:Enable-ExchangeCertificate -Thumbprint 2548917C09385842A78C36F164425E611C72E541 -Services "IIS" 
  
-
-5. Reset IIS Services
-Run: IISReset command to restart Webservices
+5. Reset IIS Services to restart Webservices:
+   IISReset 
  
-
 6. Go to the browser and type:
 https://exchangeservername.domainname/ecp
 Example:https://mail.samtech.com/ecp
