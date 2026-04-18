@@ -149,6 +149,22 @@ Connect → Reattach to user
 Move → Change database
 Restore → Recover deleted mailbox
 
+45. Get-ExchangeCertificate
+(List all certificates installed on the Exchange server)
+
+46. New-MailboxDatabase -Name "Sales" -EdbFilePath "D:\Exchange\Databases\Sales\Sales.edb" -LogFolderPath "D:\Exchange\Databases\Sales\Logs"
+(Creates a new mailbox database named Sales and defines the storage location for the database file and transaction logs)
+
+47. Restart-Service MSExchangeIS
+(Restarts the Microsoft Exchange Information Store service, which manages mailbox databases and storage operations)
+
+48. Mount-Database Sales
+(Mounts the mailbox database named Sales, making it active and available for user access in Exchange)
+
+49. Get-Mailbox -OrganizationalUnit "Sales" | New-MoveRequest -TargetDatabase "DB Sales"
+(Finds all mailboxes in the Sales Organizational Unit and moves them to the mailbox database DB Sales)
+
+
 
 
 
