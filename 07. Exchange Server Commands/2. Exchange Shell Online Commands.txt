@@ -1,0 +1,97 @@
+1. get-mailboxdatabase
+(It will show all the database created in exchange server)
+
+2. get-mailbox -database "mailbox database"
+(It will show all the mailbox listed inside mailbox database)
+
+3. Get-MailboxDatabase | Get-Mailbox
+(Displays all user mailboxes within all mailbox databases)
+
+4. Get-MailboxDatabase -Identity SalesDB | Get-Mailbox
+(Lists all user mailboxes within the specified database, SalesDB)
+
+5. mount-database -identity "Sales"
+(It will mount the database Sales)
+
+6. dismount-database -identity "Sales"
+(It will dismount the database Sales)
+
+7. Get-Mailbox -OU sales | New-MoveRequest -TargetDatabase sales
+(It will move all the users from Sales OU to sales Database)
+
+8. get-mailbox
+(It lists all the mailbox)
+
+9. enable-mailbox -identity "Sam.Curran" -database "mailbox database"
+(It will enable Sam curran mailbox and place in database named mailbox)
+
+10. disable-mailbox -identity "Sam.Curran"
+(It will disable Sam Curran mailbox)
+
+11. get-mailbox -identity "sam.curran" |fl
+(It shows mailbox quota of Sam. Can run this command without keeping fl also)
+
+12. Get-Mailbox -Identity Sam | fl > C:\temp\Sam.txt
+( It Saves the detailed information about Sam’s mailbox to a text file located in C:\temp)
+
+13. get-sendconnector
+(It will show send connector configuration)
+
+14. get-sendconnector |fl
+(It will show all configuration in format list)
+
+15. get-sendconnector |fl name,smarthosts,port
+(It will show send connector name,smarthosts and port details) 
+
+16. get-sendconnector |fl name, *port*
+(It will show name, port and source transport servers details)
+
+17. set-sendconnector -identity "mailgun" -port 587
+(It changes default SMTP port 25 to 587, mailgun means send connector name which I have given in ECP)
+
+18. get-receiveconnector
+(It shows receive connector details)
+
+19. get-receiveconnector |fl
+(It shows all receive connector configuration in format list)
+
+20. restart-service msexchangetransport
+(It will restart msexchange transport)
+
+21. restart-service msexchangeis
+(It will restart MS Exchange Information Store Service)
+
+22. get-transportservice |fl name, *port*
+It list out all transport service details)
+
+23. get-service -name msexchangeis
+(It shows this service is running or not)
+
+24. get-journalrule
+(It shows all the journal rule configured)
+
+25. test-netconnection -computername 192.168.1.13 -port 25
+(It test port 25 connection)
+
+26. set-mailbox -identity "Sam Curran" -type shared  
+(It coverts Sam Curran mailbox to shared mailbox)
+
+27. set-mailbox -identity "Sam Curran" |fl name, recipienttypedetails
+(It verifies Sam Curran mailbox has been converted to shared or not)
+
+28. Get-MailboxDatabase | Get-MailboxStatistics | Where-Object { $_.DisconnectReason -ne $null }
+    (It shows all mailboxes that are disconnected in the Exchange server)
+
+29. Get-MailboxDatabase | ForEach-Object {
+    Get-MailboxStatistics -Database $_.Identity | Where-Object { $_.DisconnectReason -ne $null }
+    }   
+    ( It lists all disconnected mailboxes for each mailbox database on the Exchange server)
+
+
+30. Get-Mailbox -Arbitration
+    (It shows the mailboxes used for managing and processing certain tasks, like handling mailbox moves and managing distribution groups)
+
+31. Test-NetConnection smtp.office365.com -Port 587 (Microsoft manages smtp.office365.com on port 587 with TLS for all tenants. Businesses using Exchange Online should ensure port 587 is open. If it went down, millions couldn’t send mail, but Microsoft monitors and fixes it immediately)
+
+32. Test-NetConnection mail.abc.com -Port 25 (If business uses on prem exchange server use this command to check if smtp port 25 is open or not)
+
