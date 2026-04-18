@@ -118,6 +118,39 @@ Step 2: Connect mailbox to another user
 Connect-Mailbox -Identity "<MailboxGUID>" -Database "DB" -User "Sam Smith"
 Final Command: Connect-Mailbox -Identity "2f3a8c12-9b1d-4e55-9a77-abc123456789" -Database "DB" -User "Sam Smith"
 
+37. Enable-Mailbox -Identity "UserName" -Database "DBName" 
+(Creates a mailbox for an existing Active Directory user in the specified database)
+
+38. Disable-Mailbox -Identity "UserName" -Confirm:$false 
+(Disables the mailbox and converts it into a disconnected mailbox while keeping the data)
+
+39. Get-MailboxStatistics -Database "DBName" | Where-Object {$_.DisconnectReason -ne $null} 
+(Finds all disconnected mailboxes in a specific database)
+
+40. Connect-Mailbox -Identity "<MailboxGUID>" -Database "DBName" -User "NewUser" 
+(Reconnects a disconnected mailbox to a different Active Directory user)
+
+41. New-MoveRequest -Identity "UserName" -TargetDatabase "NewDB" 
+(Moves a mailbox from one database to another)
+
+42. Get-MoveRequest 
+(Displays the status of mailbox move requests)
+
+43. Remove-MoveRequest -Identity "UserName" 
+(Removes completed mailbox move requests from the system)
+
+44. Undo-SoftDeletedMailbox -Identity "<MailboxGUID>" -Database "DBName" 
+(Restores a soft-deleted mailbox back to a user account)
+
+Note:
+Enable → Mailbox created
+Disable → Mailbox disconnected
+Connect → Reattach to user
+Move → Change database
+Restore → Recover deleted mailbox
+
+
+
 
 
 
