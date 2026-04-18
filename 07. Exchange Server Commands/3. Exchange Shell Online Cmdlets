@@ -84,3 +84,24 @@
 
 29. Get-MailboxDatabase | Set-MailboxDatabase -IssueWarningQuota 14.5GB -ProhibitSendQuota 15GB -ProhibitSendReceiveQuota 15.3GB 
 (Sets quota limits for all mailbox databases in Exchange; note: this is a corrected cmdlet name — “Set-MailboxDatabse” should be “Set-MailboxDatabase”)
+
+30. Set-Mailbox -Identity <MailboxIdentity> -ProhibitSendQuota 15GB -ProhibitSendReceiveQuota 15GB -IssueWarningQuota 14GB 
+(Sets mailbox storage limits including warning level, send restriction, and send/receive restriction for a specific mailbox)
+
+31. Set-MailboxDatabase -Identity <DatabaseName> -IssueWarningQuota 14GB -ProhibitSendQuota 15GB -ProhibitSendReceiveQuota 15GB 
+(Configures default mailbox size limits at the database level for all mailboxes in that database)
+
+32. Get-MailboxDatabase | Set-MailboxDatabase -IssueWarningQuota 14.5GB -ProhibitSendQuota 15GB -ProhibitSendReceiveQuota 15.3GB 
+(Applies updated quota limits to all mailbox databases in the Exchange organization)
+
+33. Get-Mailbox | Set-Mailbox -ProhibitSendQuota 6GB -ProhibitSendReceiveQuota 6GB -IssueWarningQuota 5.5GB -UseDatabaseQuotaDefaults $false 
+(Applies custom mailbox quota settings to all mailboxes in the organization and disables database default quotas)
+
+34. Get-Mailbox -Database "executive" | Get-Mailbox | Set-Mailbox -ProhibitSendQuota 6GB -ProhibitSendReceiveQuota 6GB -IssueWarningQuota 5.5GB -UseDatabaseQuotaDefaults $false
+(Applies custom quota settings to all mailboxes in the “executive” database)
+
+35. Remove-EcpVirtualDirectory -Identity "ServerName\ecp (Default Web Site)" 
+(Removes the existing Exchange Control Panel virtual directory from IIS on the specified server)
+
+36. New-EcpVirtualDirectory -InternalUrl "https://mail.contoso.com/ecp" -ExternalUrl "https://mail.samtech.com/ecp" -BasicAuthentication:$true -WindowsAuthentication:$true
+(Creates a new ECP virtual directory and configures internal and external URLs along with authentication methods)
