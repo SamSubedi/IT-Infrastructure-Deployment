@@ -1,0 +1,28 @@
+dcdiag: Runs a general Domain Controller diagnostic. Checks common AD/DNS/replication and DC health issues.
+
+dcdiag /v: Runs dcdiag in verbose mode, giving much more detailed diagnostic information. Useful when troubleshooting a problem.
+
+dcdiag /test:dns: Specifically tests DNS health on the Domain Controller. Checks DNS configuration, DNS registration, and AD-related DNS records.
+
+dcdiag /test:replications: Tests Active Directory replication between Domain Controllers and looks for replication-related problems.
+
+repadmin /replsummary: Gives a summary of AD replication health across Domain Controllers. Helps identify Domain Controllers with replication failures or errors.
+
+repadmin /showrepl: Shows detailed inbound replication status for the Domain Controller, including which Domain Controllers it replicates from and whether replication succeeded or failed.
+
+net share: Displays the shared folders and resources currently shared by the server.
+
+net share SYSVOL: Checks and displays the SYSVOL share. SYSVOL contains important domain files such as Group Policy and logon-related files.
+
+net share NETLOGON: Checks and displays the NETLOGON share. NETLOGON is used by Domain Controllers for logon scripts and other domain authentication-related files.
+
+Summary:
+dcdiag → Is my DC healthy?
+dcdiag /v → Give me detailed health information
+dcdiag /test:dns → Is DNS working correctly?
+dcdiag /test:replications → Is AD replication working?
+repadmin /replsummary → Which DCs have replication problems?
+repadmin /showrepl → Show me the detailed replication relationships/errors
+net share → What shares exist?
+SYSVOL → Is the SYSVOL share present?
+NETLOGON → Is the NETLOGON share present?
