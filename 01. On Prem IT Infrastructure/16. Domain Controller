@@ -16,6 +16,29 @@ net share SYSVOL: Checks and displays the SYSVOL share. SYSVOL contains importan
 
 net share NETLOGON: Checks and displays the NETLOGON share. NETLOGON is used by Domain Controllers for logon scripts and other domain authentication-related files.
 
+
+# Real World Use:
+
+dcdiag: Runs a general DC health check (AD, DNS, services, connectivity). Real-world use: Your first line of defense when users suddenly can't log in or Group Policy fails to apply.
+
+dcdiag /v: Runs the diagnostic in verbose mode for deeper test results and warnings. Real-world use: Used when a standard dcdiag reports a failure but doesn't give you enough detail to find the root cause.
+
+ dcdiag /test:dns: Specifically checks DNS configurations, SRV registrations, and zone records. Real-world use: Crucial when workstations are failing to find a Domain Controller on the network.
+
+ dcdiag /test:replications: Targets AD database replication health between DCs. Real-world use: Used when changes (like a new user or password update) made on one DC aren't showing up on another.
+
+repadmin /replsummary: Provides a high-level summary of replication health across all DCs. Real-world use: A quick way to spot exactly which Domain Controllers are failing replication without checking each one individually.
+
+repadmin /showrepl: Displays detailed inbound replication data, partners, and error codes. Real-world use: Once replsummary flags an error, you run this to find out exactly which replication partner is failing and when it last worked.
+
+net share: Lists all shared resources on the server. Real-world use: Run immediately after a DC reboot to quickly confirm that the server is actually sharing out its critical identity folders.
+
+ net share SYSVOL: Verifies the local policy share exists. This holds GPOs, templates, and scripts (replicated via modern DFSR). Real-world use: If users aren't receiving updated Group Policies, you run this to confirm the share is alive before diving into background DFSR troubleshooting.
+
+net share NETLOGON: Verifies the log on share exists (maps to SYSVOL\domain\scripts for legacy scripts). Real-world use: Its presence is a vital indicator that the DC is ready to handle authentication traffic, though overall health must still be verified via dcdiag.
+
+Use net share for quick share availability, repadmin for database sync issues, and dcdiag for comprehensive structural health.
+
 Summary:
 dcdiag → Is my DC healthy?
 dcdiag /v → Give me detailed health information
